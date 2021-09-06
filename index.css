@@ -24,7 +24,7 @@ div {
 /*    text-align: center;*/
 /*    margin-bottom: 10px;*/
 /*}*/
-.header{
+.header {
     font-size: 170%;
     font-weight: bold;
     color: #fff;
@@ -34,6 +34,7 @@ div {
     border-radius: 0 0 10px 10px;
     box-shadow: 0 0 10px cornflowerblue;
 }
+
 .container {
     /* background: #cb9c00;*/
     margin-bottom: 10px;
@@ -82,4 +83,44 @@ input {
     border: outset;
     cursor: pointer;
     border-radius: 500px;
+}
+
+.sliding-button {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    position: relative;
+    padding: 15px 30px;
+    border: 1px solid;
+    border-image: linear-gradient(180deg, #043e79, #005ec7, #1067da, #0898ff);
+    border-image-slice: 1;
+    margin: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    overflow: hidden;
+    letter-spacing: 2px;
+    transition: .8s cubic-bezier(.165, .84, .44, 1);
+}
+
+.sliding-button:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 0;
+    width: 100%;
+    z-index: -1;
+    color: white;
+    background: linear-gradient(180deg, #043e79, #005ec7, #1067da, #0898ff);
+    transition: .8s cubic-bezier(.165, .84, .44, 1);
+}
+
+.sliding-button:hover {
+    background: rgba(255, 255, 255, 0);
+}
+
+.sliding-button:hover:before {
+    bottom: 0%;
+    top: auto;
+    height: 100%;
 }
