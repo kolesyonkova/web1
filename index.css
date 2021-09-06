@@ -1,0 +1,85 @@
+body {
+    background-image: url('images/bgi.png');
+    max-width: 960px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0;
+}
+
+p {
+    font-family: sans-serif;
+    font-weight: 900;
+}
+
+div {
+    padding: 5px 15px;
+}
+
+/*.header {*/
+/*    box-shadow: 0 0 10px cornflowerblue;*/
+/*    border-radius: 10px 10px 0 0;*/
+/*    margin-top: 20px;*/
+/*    min-height: 50px;*/
+/*    line-height: 50px;*/
+/*    text-align: center;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+.header{
+    font-size: 170%;
+    font-weight: bold;
+    color: #fff;
+    background: cornflowerblue;
+    min-height: 30px;
+    line-height: 30px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 0 10px cornflowerblue;
+}
+.container {
+    /* background: #cb9c00;*/
+    margin-bottom: 10px;
+    box-shadow: 0 0 10px cornflowerblue;
+    align-content: center;
+}
+
+.footer {
+    font-weight: bold;
+    color: #fff;
+    background: cornflowerblue;
+    min-height: 30px;
+    line-height: 30px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 0 10px cornflowerblue;
+    font-size: 170%;
+}
+
+#imageArea {
+    display: block;
+    margin: auto;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.result_table { /* селектор классов */
+    width: 100%;
+    font-size: 100%;
+    border: solid;
+    border-radius: 5px;
+    text-align: center;
+    font-style: normal;
+    border-spacing: 15px;
+}
+
+th.variable::after { /*селектор псевдоэлементов*/
+    content: " (var)";
+    margin: 0 auto;
+}
+
+
+input {
+    text-align: center;
+    padding: 1% 5%;
+    margin: 2%;
+    border: outset;
+    cursor: pointer;
+    border-radius: 500px;
+}
