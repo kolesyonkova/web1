@@ -73,6 +73,7 @@ div {
 th.variable::after { /*селектор псевдоэлементов*/
     content: " (var)";
     margin: 0 auto;
+    font-size: 100%;
 }
 
 
