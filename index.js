@@ -18,8 +18,15 @@ function submit() {
     }
 }
 
+//TODO:объединить вывод всех ошибок, не создавая объекты в каждой валидации
+//TODO:из методов валидации возвращать только строчки
 function clear() {
     send_request('GET', 'clear.php');
+    $("#result_table tr:gt(0)").remove();
+}
+
+function start() {
+    send_request('GET', 'processing.php');
     $("#result_table tr:gt(0)").remove();
 }
 
@@ -128,3 +135,4 @@ function send_request(method, url, params = '') {
 
 document.getElementById("send-button").addEventListener("click", submit);
 document.getElementById("clear-button").addEventListener("click", clear);
+start();

@@ -16,36 +16,37 @@ $maximum = 10;
 if (!isset($_SESSION['data'])) {
     $_SESSION['data'] = array();
 }
+if (isset($_REQUEST['x'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        if (!is_numeric($x) || !is_numeric($y) || !is_numeric($r))
+            $isValid = false;
+        if (strlen($y) > $maximum || strlen($x) > $maximum || strlen($r) > $maximum)
+            $isValid = false;
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if (!is_numeric($x) || !is_numeric($y) || !is_numeric($r))
-        $isValid = false;
-    if (strlen($y) > $maximum || strlen($x) > $maximum || strlen($r) > $maximum)
-        $isValid = false;
+        if ($x < -3 || $x > 5)
+            $isValid = false;
+        if ($r < 2 || $r > 5)
+            $isValid = false;
+        if ($y < -5 || $y > 3)
+            $isValid = false;
 
-    if ($x < -3 || $x > 5)
-        $isValid = false;
-    if ($r < 2 || $r > 5)
-        $isValid = false;
-    if ($y < -5 || $y > 3)
-        $isValid = false;
-
-    if (!$isValid) {
-        header("Status: 400 Bad Request", true, 400);
-        exit;
+        if (!$isValid) {
+            header("Status: 400 Bad Request", true, 400);
+            exit;
+        }
+        if ((($x >= 0) && ($y >= 0) && ($y <= -$x + $r / 2)) ||
+            (($x <= 0) && ($y >= 0) && (sqrt($x ^ 2 + $y ^ 2) <= $r / 2)) ||
+            (($x >= 0) && ($x <= $r / 2) && ($y <= 0) && ($y >= $r))) {
+            $out = "True";
+        } else {
+            $out = "False";
+        }
+        $calc_time = microtime(true) - $start;
+        $answer = array($xStr, $yStr, $rStr, $out, $now, number_format($calc_time, 10, ".", "") . " sec");
+        array_push($_SESSION['data'], $answer);
     }
-    if ((($x >= 0) && ($y >= 0) && ($y <= -$x + $r / 2)) ||
-        (($x <= 0) && ($y >= 0) && (sqrt($x ^ 2 + $y ^ 2) <= $r / 2)) ||
-        (($x >= 0) && ($x <= $r / 2) && ($y <= 0) && ($y >= $r))) {
-        $out = "True";
-    } else {
-        $out = "False";
-    }
-    $calc_time = microtime(true) - $start;
-    $answer = array($xStr, $yStr, $rStr, $out, $now, number_format($calc_time, 10, ".", "") . " sec");
-    array_push($_SESSION['data'], $answer);
 }
-$resp1 = "";
+$itog = "";
 foreach ($_SESSION['data'] as $resp) {
     $jsonData = '{' .
         "\"xval\":\"$resp[0]\"," .
@@ -55,8 +56,8 @@ foreach ($_SESSION['data'] as $resp) {
         "\"sendingTime\":\"$resp[4]\"," .
         "\"totalProcessingTime\":\"$resp[5]\"" .
         "}";
-    $resp1 = $resp1 . $jsonData . ',';
+    $itog = $itog . $jsonData . ',';
 }
-$resp1 = substr($resp1, 0, -1);
-echo '{' . "\"response\":[" . $resp1 . ']}';
+$itog = substr($itog, 0, -1);
+echo '{' . "\"response\":[" . $itog . ']}';
 ?>
