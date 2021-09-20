@@ -1,4 +1,10 @@
 function submit() {
+    let wrongFieldX = document.getElementById("wrong_field_X");
+    let wrongFieldY = document.getElementById("wrong_field_Y");
+    let wrongFieldR = document.getElementById("wrong_field_R");
+    wrongFieldX.textContent = "";
+    wrongFieldY.textContent = "";
+    wrongFieldR.textContent = "";
     if (checkX() && checkY() && checkR()) {
         let data = "?x=" + parseFloat(document.getElementById("X").value.substring(0, 10).replace(',', '.'));
         data += "&y=";
@@ -14,21 +20,23 @@ function submit() {
 
 function clear() {
     send_request('GET', 'clear.php');
+    $("#result_table tr:gt(0)").remove();
 }
 
 function checkX() {
+    let wrongFieldX = document.getElementById("wrong_field_X");
     let x = document.getElementById("X");
     if (x.value.trim() === "") {
-        alert("Поле X должно быть заполнено");
+        wrongFieldX.textContent = "Поле X должно быть заполнено";
         return false;
     }
     x.value = x.value.substring(0, 10).replace(',', '.');
     if (!(x.value && !isNaN(x.value))) {
-        alert("X должен быть числом!");
+        wrongFieldX.textContent = "X должен быть числом!";
         return false;
     }
     if (!((x.value >= -3) && (x.value <= 5))) {
-        alert("X должен принадлежать промежутку: (-3; 5)!");
+        wrongFieldX.textContent = "X должен принадлежать промежутку: (-3; 5)!";
         return false;
     }
     return true;
@@ -36,51 +44,42 @@ function checkX() {
 
 
 function checkY() {
-    let xButtons = document.getElementsByName("check_box");
+    let wrongFieldY = document.getElementById("wrong_field_Y");
+    let yButtons = document.getElementsByName("check_box");
     let counter = 0
-    xButtons.forEach(y => {
+    yButtons.forEach(y => {
         if (y.checked)
             counter++
     })
     if (counter >= 2) {
-        alert("Выберите только одно значение Y")
+        wrongFieldY.textContent = "Выберите только одно значение Y";
         return false
     } else if (counter === 0) {
-        alert("Вы должны выбрать 1 значение Y")
+        wrongFieldY.textContent = "Вы должны выбрать 1 значение Y";
         return false
     }
     return true;
 }
 
 function checkR() {
+    let wrongFieldR = document.getElementById("wrong_field_R");
     let r = document.getElementById("R");
     if (r.value.trim() === "") {
-        alert("Поле R должно быть заполнено");
+        wrongFieldR.textContent = "Поле R должно быть заполнено";
         return false;
     }
     r.value = r.value.substring(0, 10).replace(',', '.');
     if (!(r.value && !isNaN(r.value))) {
-        alert("R должен быть числом!");
+        wrongFieldR.textContent = "R должен быть числом!";
         return false;
     }
     if (!((r.value >= 2) && (r.value <= 5))) {
-        alert("R должен принадлежать промежутку: (2; 5)!");
+        wrongFieldR.textContent = "R должен принадлежать промежутку: (2; 5)!";
         return false;
     }
     return true;
 }
 
-// function ajax(url, method, functionName, dataArray) {
-//     let xhttp = new XMLHttpRequest();
-//     xhttp.open(method, url, true);
-//     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//     xhttp.send(dataArray);
-//     xhttp.onreadystatechange = () => {
-//         if (this.readyState == 4 && this.status == 200) {
-//             functionName(this);
-//         }
-//     }
-// }
 function send_request(method, url, params = '') {
     let p = new Promise((resolve, reject) => {
         let xhttp = new XMLHttpRequest()
@@ -95,13 +94,13 @@ function send_request(method, url, params = '') {
             reject(xhttp)
         }
         xhttp.send();
-    })
-    p.then(xhttp => {
+    }).then(xhttp => {
         let response = xhttp.responseText
-        if (response !== "")
-            document.querySelector(".result_table").innerHTML = response
-        else
-            alert("Неверный запрос")
+        let response1=JSON.parse(xhttp.responseText)
+        $("#result_table tr:gt(1)").remove();
+        if (response !== "remove") {
+            $('#result_table tr:last').after(response);
+        }
     }).catch((xhttp) => {
         if (xhttp.status === 400)
             alert("неверный запрос")

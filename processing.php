@@ -34,36 +34,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         header("Status: 400 Bad Request", true, 400);
         exit;
     }
-    if ((($x >= 0) && ($x <= $r / 2) && ($y >= 0) && ($y <= $r / 2)) ||
+    if ((($x >= 0) && ($y >= 0) && ($y <= -$x + $r / 2)) ||
         (($x >= 0) && ($x <= $r / 2) && ($y <= 0) && ($y >= -$r)) ||
         (($x <= 0) && ($x >= -$r / 2) && ($y >= 0) && ($y >= $r / 2))) {
-        $out = "<span style='color: green'>True</span>";
+        $out = "True";
     } else {
-        $out = "<span style='color: red'>False</span>";
+        $out = "False";
     }
     $calc_time = microtime(true) - $start;
-    $answer = array($xStr, $yStr, $rStr, $out, $now, $calc_time);
+    $answer = array($xStr, $yStr, $rStr, $out, $now, number_format($calc_time, 10, ".", "") . " sec");
     array_push($_SESSION['data'], $answer);
 }
+foreach ($_SESSION['data'] as $resp) {
+    $receivedData = ("<tr>
+                        <td>" . $resp[0] . "</td>
+                        <td>" . $resp[1] . "</td>
+                        <td>" . $resp[2] . "</td>
+                        <td>" . $resp[3] . "</td>
+                        <td>" . $resp[4] . "</td>
+                        <td>" . $resp[5] . "</td>
+                       </tr>");
+    echo $receivedData;
+}
 ?>
-<table align="center" class="result_table">
-    <tr>
-        <th class="variable">X</th>
-        <th class="variable">Y</th>
-        <th class="variable">R</th>
-        <th>Result</th>
-        <th>Sending time</th>
-        <th>Total processing time</th>
-    </tr>
-    <?php foreach ($_SESSION['data'] as $word) { ?>
-        <tr>
-            <td><?php echo $word[0] ?></td>
-            <td><?php echo $word[1] ?></td>
-            <td><?php echo $word[2] ?></td>
-            <td><?php echo $word[3] ?></td>
-            <td><?php echo $word[4] ?></td>
-            <td><?php echo number_format($word[5], 10, ".", "") . " sec" ?></td>
-        </tr>
-    <?php } ?>
-</table>
-

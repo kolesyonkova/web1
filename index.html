@@ -11,46 +11,55 @@
 </div>
 <div class="container">
     <p><img id="imageArea" src="images/areas.jpg" alt="areas"></p>
-    <p class="variable">X=
-        <label for="X"></label><input id="X" type="text" placeholder="Enter X:">
-    </p>
-    <p class="variable">У=
-        <label>
-            <input class="check_box" type="checkbox" value="-5" name="check_box">
-        </label>-5
-        <label>
-            <input class="check_box" type="checkbox" value="-4" name="check_box">
-        </label>-4
-        <label>
-            <input class="check_box" type="checkbox" value="-3" name="check_box">
-        </label>-3
-        <label>
-            <input class="check_box" type="checkbox" value="-2" name="check_box">
-        </label>-2
-        <label>
-            <input class="check_box" type="checkbox" value="-1" name="check_box">
-        </label>-1
-        <label>
-            <input class="check_box" type="checkbox" value="0" name="check_box">
-        </label>0
-        <label>
-            <input class="check_box" type="checkbox" value="1" name="check_box">
-        </label>1
-        <label>
-            <input class="check_box" type="checkbox" value="2" name="check_box">
-        </label>2
-        <label>
-            <input class="check_box" type="checkbox" value="3" name="check_box">
-        </label>3
-    </p>
-    <p class="variable">R=
-        <label for="R"></label><input id="R" type="text" placeholder="Enter R:">
-    </p>
+    <div id="input_field_X" class="validate">
+        <p class="variable">X=
+            <label for="X"></label><input id="X" type="text" placeholder="Enter X:">
+        </p>
+        <p id="wrong_field_X" class="wrong"></p>
+    </div>
+    <div id="input_field_Y" class="validate">
+        <p class="variable">У=
+            <label>
+                <input class="check_box" type="checkbox" value="-5" name="check_box">
+            </label>-5
+            <label>
+                <input class="check_box" type="checkbox" value="-4" name="check_box">
+            </label>-4
+            <label>
+                <input class="check_box" type="checkbox" value="-3" name="check_box">
+            </label>-3
+            <label>
+                <input class="check_box" type="checkbox" value="-2" name="check_box">
+            </label>-2
+            <label>
+                <input class="check_box" type="checkbox" value="-1" name="check_box">
+            </label>-1
+            <label>
+                <input class="check_box" type="checkbox" value="0" name="check_box">
+            </label>0
+            <label>
+                <input class="check_box" type="checkbox" value="1" name="check_box">
+            </label>1
+            <label>
+                <input class="check_box" type="checkbox" value="2" name="check_box">
+            </label>2
+            <label>
+                <input class="check_box" type="checkbox" value="3" name="check_box">
+            </label>3
+        </p>
+        <p id="wrong_field_Y" class="wrong"></p>
+    </div>
+    <div id="input_field_R" class="validate">
+        <p class="variable">R=
+            <label for="R"></label><input id="R" type="text" placeholder="Enter R:">
+        </p>
+        <p id="wrong_field_R" class="wrong"></p>
+    </div>
     <button id="send-button" class="sliding-button" type="submit">Отправить</button>
     <button id="clear-button" class="sliding-button" type="submit">Очистить историю запросов</button>
 </div>
 <div class="footer">
-    <table class="result_table">
+    <table id="result_table" class="result_table">
         <tr>
             <th class="variable">X</th>
             <th class="variable">Y</th>
@@ -61,6 +70,7 @@
         </tr>
     </table>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script src="index.js"></script>
 </body>
 </html>
