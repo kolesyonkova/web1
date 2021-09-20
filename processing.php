@@ -35,8 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
     if ((($x >= 0) && ($y >= 0) && ($y <= -$x + $r / 2)) ||
-        (($x >= 0) && ($x <= $r / 2) && ($y <= 0) && ($y >= -$r)) ||
-        (($x <= 0) && ($x >= -$r / 2) && ($y >= 0) && ($y >= $r / 2))) {
+        (($x <= 0) && ($y >= 0) && (sqrt($x ^ 2 + $y ^ 2) <= $r / 2)) ||
+        (($x >= 0) && ($x <= $r / 2) && ($y <= 0) && ($y >= $r))) {
         $out = "True";
     } else {
         $out = "False";
@@ -47,23 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 $resp1 = "";
 foreach ($_SESSION['data'] as $resp) {
-//    $receivedData = ("<tr>
-//                        <td>" . $resp[0] . "</td>
-//                        <td>" . $resp[1] . "</td>
-//                        <td>" . $resp[2] . "</td>
-//                        <td>" . $resp[3] . "</td>
-//                        <td>" . $resp[4] . "</td>
-//                        <td>" . $resp[5] . "</td>
-//                       </tr>");
-//    echo $receivedData;
-//    $itog = '{' .
-//        "\"xval\":\"$resp[0]\"," .
-//        "\"yval\":\"$resp[1]\"," .
-//        "\"rval\":\"$resp[2]\"," .
-//        "\"out\": \"$resp[3]\"," .
-//        "\"sendingTime\":\"$resp[4]\"," .
-//        "\"totalProcessingTime\":\"$resp[5]\"" .
-//        "},";
     $jsonData = '{' .
         "\"xval\":\"$resp[0]\"," .
         "\"yval\":\"$resp[1]\"," .
