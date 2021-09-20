@@ -95,12 +95,23 @@ function send_request(method, url, params = '') {
         }
         xhttp.send();
     }).then(xhttp => {
-        let response = xhttp.responseText
-        let response1=JSON.parse(xhttp.responseText)
         $("#result_table tr:gt(1)").remove();
-        if (response !== "remove") {
-            $('#result_table tr:last').after(response);
+        let par = xhttp.responseText;
+        if (par !== "remove") {
+            let result = JSON.parse(xhttp.responseText);
+            for (let i in result.response) {
+                let newRow = '<tr>';
+                newRow += '<td>' + result.response[i].xval + '</td>';
+                newRow += '<td>' + result.response[i].yval + '</td>';
+                newRow += '<td>' + result.response[i].rval + '</td>';
+                newRow += '<td>' + result.response[i].out + '</td>';
+                newRow += '<td>' + result.response[i].sendingTime + '</td>';
+                newRow += '<td>' + result.response[i].totalProcessingTime + '</td>';
+                newRow += '</tr>';
+                $('#result_table').append(newRow);
+            }
         }
+        // $('#result_table tr:last').after(response);
     }).catch((xhttp) => {
         if (xhttp.status === 400)
             alert("неверный запрос")

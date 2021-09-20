@@ -45,15 +45,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $answer = array($xStr, $yStr, $rStr, $out, $now, number_format($calc_time, 10, ".", "") . " sec");
     array_push($_SESSION['data'], $answer);
 }
+$resp1 = "";
 foreach ($_SESSION['data'] as $resp) {
-    $receivedData = ("<tr>
-                        <td>" . $resp[0] . "</td>
-                        <td>" . $resp[1] . "</td>
-                        <td>" . $resp[2] . "</td>
-                        <td>" . $resp[3] . "</td>
-                        <td>" . $resp[4] . "</td>
-                        <td>" . $resp[5] . "</td>
-                       </tr>");
-    echo $receivedData;
+//    $receivedData = ("<tr>
+//                        <td>" . $resp[0] . "</td>
+//                        <td>" . $resp[1] . "</td>
+//                        <td>" . $resp[2] . "</td>
+//                        <td>" . $resp[3] . "</td>
+//                        <td>" . $resp[4] . "</td>
+//                        <td>" . $resp[5] . "</td>
+//                       </tr>");
+//    echo $receivedData;
+//    $itog = '{' .
+//        "\"xval\":\"$resp[0]\"," .
+//        "\"yval\":\"$resp[1]\"," .
+//        "\"rval\":\"$resp[2]\"," .
+//        "\"out\": \"$resp[3]\"," .
+//        "\"sendingTime\":\"$resp[4]\"," .
+//        "\"totalProcessingTime\":\"$resp[5]\"" .
+//        "},";
+    $jsonData = '{' .
+        "\"xval\":\"$resp[0]\"," .
+        "\"yval\":\"$resp[1]\"," .
+        "\"rval\":\"$resp[2]\"," .
+        "\"out\": \"$resp[3]\"," .
+        "\"sendingTime\":\"$resp[4]\"," .
+        "\"totalProcessingTime\":\"$resp[5]\"" .
+        "}";
+    $resp1 = $resp1 . $jsonData . ',';
 }
+$resp1 = substr($resp1, 0, -1);
+echo '{' . "\"response\":[" . $resp1 . ']}';
 ?>
