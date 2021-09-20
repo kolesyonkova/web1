@@ -104,7 +104,12 @@ function send_request(method, url, params = '') {
                 newRow += '<td>' + result.response[i].xval + '</td>';
                 newRow += '<td>' + result.response[i].yval + '</td>';
                 newRow += '<td>' + result.response[i].rval + '</td>';
-                newRow += '<td>' + result.response[i].out + '</td>';
+                if (result.response[i].out === "True") {
+                    newRow += '<td><div style="color:#279327">' + result.response[i].out + '</div></td>';
+                } else {
+
+                    newRow += '<td><div style="color:#e11a1a">' + result.response[i].out + '</div></td>';
+                }
                 newRow += '<td>' + result.response[i].sendingTime + '</td>';
                 newRow += '<td>' + result.response[i].totalProcessingTime + '</td>';
                 newRow += '</tr>';
