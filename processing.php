@@ -20,8 +20,18 @@ if (isset($_REQUEST['x'])) {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if (!is_numeric($x) || !is_numeric($y) || !is_numeric($r))
             $isValid = false;
-        if (strlen($y) > $maximum || strlen($x) > $maximum || strlen($r) > $maximum)
-            $isValid = false;
+        if (strlen($y) > $maximum) {
+            $y = substr($y, 0, $maximum);
+            $yStr = substr($yStr, 0, $maximum);
+        }
+        if (strlen($x) > $maximum) {
+            $x = substr($x, 0, $maximum);
+            $xStr = substr($xStr, 0, $maximum);
+        }
+        if (strlen($r) > $maximum) {
+            $r = substr($r, 0, $maximum);
+            $rStr = substr($rStr, 0, $maximum);
+        }
 
         if ($x < -3 || $x > 5)
             $isValid = false;

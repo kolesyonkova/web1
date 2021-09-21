@@ -1,27 +1,26 @@
 function submit() {
-    let wrongFieldX = document.getElementById("wrong_field_X");
-    let wrongFieldY = document.getElementById("wrong_field_Y");
-    let wrongFieldR = document.getElementById("wrong_field_R");
     wrongFieldX.textContent = "";
     wrongFieldY.textContent = "";
     wrongFieldR.textContent = "";
-    if (checkX() && checkY() && checkR()) {
+    if (checkX() & checkY() & checkR()) {
         document.getElementsByName("check_box").forEach(y => {
             if (y.checked) {
                 let data = "?x=" + parseFloat(document.getElementById("X").value.substring(0, 10).replace(',', '.'));
                 data += "&y=";
                 data += y.value
                 data += "&r=" + parseFloat(document.getElementById("R").value.substring(0, 10).replace(',', '.'));
-                console.log(data)
                 send_request('GET', 'processing.php', data)
             }
         })
     }
 }
 
-//TODO:объединить вывод всех ошибок, не создавая объекты в каждой валидации
 //TODO:из методов валидации возвращать только строчки
+//TODO:доработать неверную обработку запросов на пхп
 function clear() {
+    wrongFieldX.textContent = "";
+    wrongFieldY.textContent = "";
+    wrongFieldR.textContent = "";
     send_request('GET', 'clear.php');
     $("#result_table tr:gt(0)").remove();
 }
@@ -32,7 +31,6 @@ function start() {
 }
 
 function checkX() {
-    let wrongFieldX = document.getElementById("wrong_field_X");
     let x = document.getElementById("X");
     if (x.value.trim() === "") {
         wrongFieldX.textContent = "Поле X должно быть заполнено";
@@ -52,7 +50,6 @@ function checkX() {
 
 
 function checkY() {
-    let wrongFieldY = document.getElementById("wrong_field_Y");
     let yButtons = document.getElementsByName("check_box");
     let counter = 0
     yButtons.forEach(y => {
@@ -71,7 +68,6 @@ function checkY() {
 }
 
 function checkR() {
-    let wrongFieldR = document.getElementById("wrong_field_R");
     let r = document.getElementById("R");
     if (r.value.trim() === "") {
         wrongFieldR.textContent = "Поле R должно быть заполнено";
@@ -138,3 +134,6 @@ function send_request(method, url, params = '') {
 document.getElementById("send-button").addEventListener("click", submit);
 document.getElementById("clear-button").addEventListener("click", clear);
 start();
+let wrongFieldX = document.getElementById("wrong_field_X");
+let wrongFieldY = document.getElementById("wrong_field_Y");
+let wrongFieldR = document.getElementById("wrong_field_R");
