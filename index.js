@@ -6,15 +6,16 @@ function submit() {
     wrongFieldY.textContent = "";
     wrongFieldR.textContent = "";
     if (checkX() && checkY() && checkR()) {
-        let data = "?x=" + parseFloat(document.getElementById("X").value.substring(0, 10).replace(',', '.'));
-        data += "&y=";
         document.getElementsByName("check_box").forEach(y => {
             if (y.checked) {
+                let data = "?x=" + parseFloat(document.getElementById("X").value.substring(0, 10).replace(',', '.'));
+                data += "&y=";
                 data += y.value
+                data += "&r=" + parseFloat(document.getElementById("R").value.substring(0, 10).replace(',', '.'));
+                console.log(data)
+                send_request('GET', 'processing.php', data)
             }
         })
-        data += "&r=" + parseFloat(document.getElementById("R").value.substring(0, 10).replace(',', '.'));
-        send_request('GET', 'processing.php', data)
     }
 }
 
@@ -58,11 +59,12 @@ function checkY() {
         if (y.checked)
             counter++
     })
-    if (counter >= 2) {
-        wrongFieldY.textContent = "Выберите только одно значение Y";
-        return false
-    } else if (counter === 0) {
-        wrongFieldY.textContent = "Вы должны выбрать 1 значение Y";
+    // if (counter >= 2) {
+    //     wrongFieldY.textContent = "Выберите только одно значение Y";
+    //     return false
+    // } else
+    if (counter === 0) {
+        wrongFieldY.textContent = "Вы должны выбрать хотя бы 1 значение Y";
         return false
     }
     return true;
@@ -102,7 +104,7 @@ function send_request(method, url, params = '') {
         }
         xhttp.send();
     }).then(xhttp => {
-        $("#result_table tr:gt(1)").remove();
+        $("#result_table tr:gt(0)").remove();
         let par = xhttp.responseText;
         if (par !== "remove") {
             let result = JSON.parse(xhttp.responseText);
